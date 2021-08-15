@@ -5,34 +5,53 @@ using UnityEngine;
 
 public class Snake : MonoBehaviour
 {
-    public GameObject tailPrefab;
-    Vector2 dir = Vector2.right;
-    //Keep track of Tails
-    List<Transform> tail = new List<Transform>();
-    // Start is called before the first frame update
-    void Start()
+    private Vector2Int gridMoveDirection;
+    private Vector2Int gridPosition;
+    private float gridMoveTimer;
+    private float gridMoveTimerMax;
+
+    private void Awake()
     {
-        InvokeRepeating("Move", 0.3f, 0.3f);
+        gridPosition = new Vector2Int(10, 10);
+        gridMoveTimerMax = 1f;
+        gridMoveTimer = gridMoveTimerMax;
+        gridMoveDirection = new Vector2Int(1, 0);
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        if (Input.GetKey(KeyCode.RightArrow))
-            dir = Vector2.right;
-        else if (Input.GetKey(KeyCode.DownArrow))
-            dir = -Vector2.up;    // '-up' means 'down'
-        else if (Input.GetKey(KeyCode.LeftArrow))
-            dir = -Vector2.right; // '-right' means 'left'
-        else if (Input.GetKey(KeyCode.UpArrow))
-            dir = Vector2.up;
-    }
+        if (Input.GetKeyDown(KeyCode.UpArrow))
+        {
+            gridMoveDirection.x = 0;
+            gridMoveDirection.y = 1;
+            //gridPosition.y += 1;
+        }
+        if (Input.GetKeyDown(KeyCode.DownArrow))
+        {
+            gridMoveDirection.x = 0;
+            gridMoveDirection.y = -1;
+            //gridPosition.y -= 1;
+        }
+        if (Input.GetKeyDown(KeyCode.LeftArrow))
+        {
+            gridMoveDirection.x = -1;
+            gridMoveDirection.y = 0;
+            //gridPosition.x -= 1;
+        }
+        if (Input.GetKeyDown(KeyCode.RightArrow))
+        {
+            gridMoveDirection.x = 1;
+            gridMoveDirection.y = 0;
+           // gridPosition.x += 1;
+        }
 
-    void Move()
-    {
-        Vector2 v = transform.position;
-        transform.Translate(dir);
-       // GameObject g = (GameObject)Instantiate(tailPrefab, v, Quaternion.identity);
-        //tail.Insert(0, g.transform);
+        gridMoveTimer += Time.deltaTime;
+        if(gridMoveTimer >= gridMoveTimerMax)
+        {
+            gridPosition += gridMoveDirection;
+            gridMoveTimer -= gridMoveTimerMax;
+        }
+
+        transform.position = new Vector3(gridPosition.x, gridPosition.y);
     }
 }

@@ -22,4 +22,12 @@ public class SpawnGFood : MonoBehaviour
     {
         Instantiate(foodPrefab, new Vector2(Random.Range(-10.0f, 10.0f), Random.Range(-4.0f, 4.0f)), Quaternion.identity);
     }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(collision.gameObject.GetComponent<Snake>())
+        {
+            Debug.Log("Collison Happeninhg");
+        }
+    }
 }
