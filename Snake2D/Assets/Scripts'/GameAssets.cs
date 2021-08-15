@@ -6,6 +6,7 @@ public class GameAssets : MonoBehaviour
 {
     public static GameAssets instance;
     public Sprite snakeHeadSprite;
+    public Sprite foodSprite;
 
     private void Awake()
     {
