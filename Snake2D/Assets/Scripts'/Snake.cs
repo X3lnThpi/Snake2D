@@ -4,6 +4,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using CodeMonkey.Utils;
+using CodeMonkey;
 
 public class Snake : MonoBehaviour
 {
@@ -110,12 +112,15 @@ public class Snake : MonoBehaviour
                 snakeMovePositionList.RemoveAt(snakeMovePositionList.Count - 1);
             }
 
-            //for(int i =0; i< snakeMovePositionList.Count; i++)
+            //foreach(SnakeBodyPart snakeBodyPart in snakeBodyPartList)
             //{
-            //    Vector2Int snakeMovePosition = snakeMovePositionList[i];
-            //    World_Sprite worldSprite = World_Sprite.Create(new Vector3(snakeMovePosition.x, snakeMovePosition.y), Vector3.one * 0.5f, Color.white);
-            //    FunctionTimer.Create(worldSprite.DestroySelf, gridMoveTimerMax);
-            //}
+            //    Vector2Int snakeBodyPartGridPosition = snakeBodyPart.GetGridPosition();
+            //    if(gridPosition == snakeBodyPartGridPosition)
+            //    {
+            //        //GameOver
+            //        CMDebug.TextPopup("Dead!", transform.position);
+            //    }
+            //}    
 
             transform.position = new Vector3(gridPosition.x, gridPosition.y);
             transform.eulerAngles = new Vector3(0, 0, GetAngleFromVector(gridMoveDirection) -90);
@@ -188,6 +193,12 @@ public class Snake : MonoBehaviour
         {
             this.gridPosition = gridPosition;
             transform.position = new Vector3(gridPosition.x, gridPosition.y);
+        }
+
+        public Vector2Int GetGridPosition()
+        {
+            //return snakeMovePosition.GetGridPosition();
+            throw new NotImplementedException();
         }
     }
 
