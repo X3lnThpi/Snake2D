@@ -8,8 +8,10 @@ public class LevelGrid
 {
 
     private Vector2Int foodGridPosition;
+    private GameObject foodGameObject;
     private int width;
     private int height;
+    private Snake snake;
 
     public LevelGrid(int width, int height)
     {
@@ -17,7 +19,7 @@ public class LevelGrid
         this.height = height;
 
         SpawnFood();
-        FunctionPeriodic.Create(SpawnFood, 1f);
+        //FunctionPeriodic.Create(SpawnFood, 1f);
         
     }
 
@@ -25,9 +27,25 @@ public class LevelGrid
     {
         foodGridPosition = new Vector2Int(Random.Range(0, width), Random.Range(0, height));
        
-        GameObject foodGameObject = new GameObject("Food", typeof(SpriteRenderer));
+        foodGameObject = new GameObject("Food", typeof(SpriteRenderer));
         foodGameObject.GetComponent<SpriteRenderer>().sprite = GameAssets.instance.foodSprite;
         foodGameObject.transform.position = new Vector3(foodGridPosition.x, foodGridPosition.y);
+    }
+
+    public void SnakeMoved(Vector2Int snakeGridPosition)
+    {
+        if(snakeGridPosition == foodGridPosition)
+        {
+            Object.Destroy(foodGameObject);
+            SpawnFood();
+            CMDebug.TextPopupMouse("SnakeAteFood");
+
+        }
+    }
+
+    public void Setup(Snake snake)
+    {
+        this.snake = snake;
     }
 
 }

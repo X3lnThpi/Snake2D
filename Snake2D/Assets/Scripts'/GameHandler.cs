@@ -6,12 +6,16 @@ using CodeMonkey.Utils;
 
 public class GameHandler : MonoBehaviour
 {
-    private LevelGrid levelgrid;
+    private LevelGrid levelGrid;
+    [SerializeField] private Snake snake;
     // Start is called before the first frame update
     void Start()
     {
+        
         Debug.Log("GameHandler Working");
-        levelgrid = new LevelGrid(20, 20);
+        levelGrid = new LevelGrid(20, 20);
+        snake.Setup(levelGrid);
+        levelGrid.Setup(snake);
         GameObject snakeheadGameObject = new GameObject();
        SpriteRenderer snakeSpriteRenderer = snakeheadGameObject.AddComponent<SpriteRenderer>();
         snakeSpriteRenderer.sprite = GameAssets.instance.snakeHeadSprite;  
