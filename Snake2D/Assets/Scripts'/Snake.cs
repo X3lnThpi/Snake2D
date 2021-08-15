@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,38 +21,74 @@ public class Snake : MonoBehaviour
 
     private void Update()
     {
+        HandleInput();
+        HandleGridMovement();
+        
+
+        
+    }
+
+    private void HandleInput()
+    {
         if (Input.GetKeyDown(KeyCode.UpArrow))
         {
-            gridMoveDirection.x = 0;
-            gridMoveDirection.y = 1;
-            //gridPosition.y += 1;
+            if (gridMoveDirection.y != -1)
+            {
+                gridMoveDirection.x = 0;
+                gridMoveDirection.y = 1;
+                //gridPosition.y += 1;
+            }
+
         }
         if (Input.GetKeyDown(KeyCode.DownArrow))
         {
-            gridMoveDirection.x = 0;
-            gridMoveDirection.y = -1;
-            //gridPosition.y -= 1;
+            if (gridMoveDirection.y != +1)
+            {
+                gridMoveDirection.x = 0;
+                gridMoveDirection.y = -1;
+                //gridPosition.y -= 1;
+            }
+
         }
         if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
-            gridMoveDirection.x = -1;
-            gridMoveDirection.y = 0;
-            //gridPosition.x -= 1;
+            if (gridMoveDirection.x != +1)
+            {
+                gridMoveDirection.x = -1;
+                gridMoveDirection.y = 0;
+                //gridPosition.x -= 1;
+            }
+
         }
         if (Input.GetKeyDown(KeyCode.RightArrow))
         {
-            gridMoveDirection.x = 1;
-            gridMoveDirection.y = 0;
-           // gridPosition.x += 1;
-        }
+            if (gridMoveDirection.x != -1)
+            {
+                gridMoveDirection.x = 1;
+                gridMoveDirection.y = 0;
+                // gridPosition.x += 1;
+            }
 
+        }
+    }
+    private void HandleGridMovement()
+    {
         gridMoveTimer += Time.deltaTime;
-        if(gridMoveTimer >= gridMoveTimerMax)
+        if (gridMoveTimer >= gridMoveTimerMax)
         {
             gridPosition += gridMoveDirection;
             gridMoveTimer -= gridMoveTimerMax;
+            transform.position = new Vector3(gridPosition.x, gridPosition.y);
+            transform.eulerAngles = new Vector3(0, 0, GetAngleFromVector(gridMoveDirection) -90);
         }
+        
+    }
 
-        transform.position = new Vector3(gridPosition.x, gridPosition.y);
+    private float GetAngleFromVector(Vector2Int dir)
+    {
+        float n = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+        if (n < 0) n += 360;
+        return n;
+        //throw new NotImplementedException();
     }
 }
