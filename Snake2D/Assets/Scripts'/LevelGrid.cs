@@ -29,7 +29,7 @@ public class LevelGrid
         {
             foodGridPosition = new Vector2Int(Random.Range(0, width), Random.Range(0, height));
         }
-        while (snake.GetGridPosition() == foodGridPosition);
+        while (snake.GetFullSnakePositionList().IndexOf(foodGridPosition) != -1);
         
        
         foodGameObject = new GameObject("Food", typeof(SpriteRenderer));
@@ -37,15 +37,17 @@ public class LevelGrid
         foodGameObject.transform.position = new Vector3(foodGridPosition.x, foodGridPosition.y);
     }
 
-    public void SnakeMoved(Vector2Int snakeGridPosition)
+    public bool TrySnakeEatFood(Vector2Int snakeGridPosition)
     {
         if(snakeGridPosition == foodGridPosition)
         {
             Object.Destroy(foodGameObject);
-            SpawnFood();
             CMDebug.TextPopupMouse("SnakeAteFood");
-
+            SpawnFood();
+            return true;
         }
+        else
+            return false;
     }
 
     public void Setup(Snake snake)
