@@ -150,7 +150,7 @@ public class Snake : MonoBehaviour
         for (int i = 0; i < snakeBodyPartList.Count; i++)
         {
          
-            snakeBodyPartList[i].SetGridPosition(snakeMovePositionList[i].GetGridPosition());
+            snakeBodyPartList[i].SetSnakeMovePosition(snakeMovePositionList[i]);
         }
         //  throw new NotImplementedException();
     }
@@ -192,6 +192,7 @@ public class Snake : MonoBehaviour
 
     private class SnakeBodyPart
     {
+        private SnakeMovePosition SnakeMovePosition;
         private Vector2Int gridPosition;
         private Transform transform;
         public SnakeBodyPart(int bodyIndex)
@@ -202,10 +203,30 @@ public class Snake : MonoBehaviour
             transform = snakeBodyGameObject.transform;
         }
 
-        public void SetGridPosition(Vector2Int gridPosition)
+        public void SetSnakeMovePosition(SnakeMovePosition snakeMovePosition)
         {
-            this.gridPosition = gridPosition;
-            transform.position = new Vector3(gridPosition.x, gridPosition.y);
+            this.SnakeMovePosition = snakeMovePosition;
+            transform.position = new Vector3(snakeMovePosition.GetGridPosition().x, snakeMovePosition.GetGridPosition().y);
+            float angle;
+            switch(snakeMovePosition.GetDirection())
+            {
+                default:
+                case Direction.Up:
+                    angle = 0;
+                    break;
+                case Direction.Down:
+                    angle = 180;
+                    break;
+                case Direction.Left:
+                    angle = -90;
+                    break;
+                case Direction.Right:
+                    angle = 90;
+                    break;
+
+
+            }
+            transform.eulerAngles = new Vector3(0, 0, angle);
         }
 
         public Vector2Int GetGridPosition()
@@ -231,6 +252,12 @@ public class Snake : MonoBehaviour
         {
             return gridPosition;
         }
+
+        public Direction GetDirection()
+        {
+            return direction;
+        }
+
     }
 
     //public Vector2Int GetGridPosition()
