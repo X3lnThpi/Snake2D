@@ -128,15 +128,15 @@ public class Snake : MonoBehaviour
                 snakeMovePositionList.RemoveAt(snakeMovePositionList.Count - 1);
             }
 
-            //foreach(SnakeBodyPart snakeBodyPart in snakeBodyPartList)
+            //foreach (SnakeBodyPart snakeBodyPart in snakeBodyPartList)
             //{
             //    Vector2Int snakeBodyPartGridPosition = snakeBodyPart.GetGridPosition();
-            //    if(gridPosition == snakeBodyPartGridPosition)
+            //    if (gridPosition == snakeBodyPartGridPosition)
             //    {
             //        //GameOver
             //        CMDebug.TextPopup("Dead!", transform.position);
             //    }
-            //}    
+            //}
 
             transform.position = new Vector3(gridPosition.x, gridPosition.y);
 
@@ -278,8 +278,8 @@ public class Snake : MonoBehaviour
 
         public Vector2Int GetGridPosition()
         {
-            //return snakeMovePosition.GetGridPosition();
-            throw new NotImplementedException();
+            return SnakeMovePosition.GetGridPosition();
+            //throw new NotImplementedException();
         }
     }
 
@@ -322,8 +322,5 @@ public class Snake : MonoBehaviour
 
     }
 
-    //public Vector2Int GetGridPosition()
-    //{
-    //    return gridPosition;
-    //}
+    
 }
